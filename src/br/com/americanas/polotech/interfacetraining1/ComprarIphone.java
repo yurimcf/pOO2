@@ -1,4 +1,4 @@
-package br.com.americanas.polotech.treinamentolista1;
+package br.com.americanas.polotech.interfacetraining1;
 
 public class ComprarIphone {
     public static void main(String[] args) {
