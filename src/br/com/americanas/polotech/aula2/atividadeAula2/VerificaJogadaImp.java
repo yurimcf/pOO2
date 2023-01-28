@@ -1,6 +1,7 @@
 package br.com.americanas.polotech.aula2.atividadeAula2;
 
 import br.com.americanas.polotech.aula2.atividadeAula2.Interface.VeficadaJogada;
+import br.com.americanas.polotech.aula2.atividadeAula2.entity.Jogador;
 
 public class VerificaJogadaImp implements VeficadaJogada {
 
@@ -65,7 +66,18 @@ public class VerificaJogadaImp implements VeficadaJogada {
     }
 
     @Override
-    public void verificadorDeJogada() {
+    public String verificadorDeJogada(int n, Jogador jogador1, Jogador jogador2) {
+        String vezDeQuem = null;
+        if (n % 2 == 0) {
+            vezDeQuem = jogador1.getNome();
+        } else {
+            vezDeQuem = jogador2.getNome();
+        }
 
+        if (n > 8) {
+            System.out.println("AHHHH O JOGO DEU VELHA! EMPATE!!!!");
+        }
+        return vezDeQuem;
     }
 }
+
