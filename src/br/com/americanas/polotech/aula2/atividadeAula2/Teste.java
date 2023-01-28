@@ -1,6 +1,7 @@
 package br.com.americanas.polotech.aula2.atividadeAula2;
 
 import br.com.americanas.polotech.aula2.atividadeAula2.entity.Jogador;
+import br.com.americanas.polotech.aula2.atividadeAula2.entity.Tabuleiro;
 
 import java.util.Scanner;
 
@@ -10,25 +11,21 @@ public class Teste {
         boolean reiniciar = true;
         TabuleiroImp tabuleiroImp = new TabuleiroImp();
         VerificaJogadaImp verificaJogadaImp = new VerificaJogadaImp();
+        Jogador jogador1 = new Jogador();
+        Jogador jogador2 = new Jogador();
+
         do {
             try {
-                tabuleiroImp.iniciar();
+                Tabuleiro tabuleiro = tabuleiroImp.iniciar();
                 System.out.println("Informe o nome do JOGADOR1:");
-                Jogador jogador1 = new Jogador();
                 jogador1.setNome(sc.nextLine());
                 jogador1.setCharacter('X');
                 System.out.println("Informe o nome do JOGADOR2:");
-                Jogador jogador2 = new Jogador();
                 jogador2.setNome(sc.nextLine());
                 jogador2.setCharacter('O');
+                tabuleiroImp.mostrarTabuleiro(tabuleiro.getTabuleiro());
 
-                char[][] tabuleiro = {{'1', '2', '3'},
-                        {'4', '5', '6'},
-                        {'7', '8', '9'}};
-
-                tabuleiroImp.mostrarTabuleiro(tabuleiro);
-
-                boolean verificar = verificaJogadaImp.verificaGanhador(tabuleiro, jogador1.getNome(), jogador2.getNome());
+                boolean verificar = verificaJogadaImp.verificaGanhador(tabuleiro.getTabuleiro(), jogador1.getNome(), jogador2.getNome());
                 int posicao = 0;
                 int numJogadas = 0;
                 char character = 0;
@@ -40,22 +37,22 @@ public class Teste {
                     System.out.printf("MOVIMENTO %d: %s ESCOLHA UM NÚMERO correspondente a sua jogada:", numJogadas, vezDeQuem);
                     posicao = sc.nextInt();
                     sc.skip("((?<!\\R)\\s)*");
-                    if (vezDeQuem == jogador1.getNome()) {
-                        tabuleiroImp.tabuleiroComJogada(posicao, tabuleiro, jogador1.getCharacter());
+                    if (vezDeQuem != jogador1.getNome()) {
+                        tabuleiroImp.tabuleiroComJogada(posicao, tabuleiro.getTabuleiro(), jogador2.getCharacter());
                     } else {
-                        tabuleiroImp.tabuleiroComJogada(posicao, tabuleiro, jogador2.getCharacter());
+                        tabuleiroImp.tabuleiroComJogada(posicao, tabuleiro.getTabuleiro(), jogador1.getCharacter());
                     }
-                    verificar = verificaJogadaImp.verificaGanhador(tabuleiro, jogador1.getNome(), jogador2.getNome());
+                    verificar = verificaJogadaImp.verificaGanhador(tabuleiro.getTabuleiro(), jogador1.getNome(), jogador2.getNome());
 
                     if (verificar) {
                         System.out.println("Jogo encerrado");
                         break;
                     }
                     while (posicao < 1 || posicao > 9) {
-                        System.out.println("Você não escreveu um numero, escreva um número no tabuleiro:");
+                        System.out.println("Você não escreveu um numero, escreva um número do tabuleiro:");
                         posicao = sc.nextInt();
                         sc.skip("((?<!\\R)\\s)*");
-                        tabuleiroImp.tabuleiroComJogada(posicao, tabuleiro, character);
+                        tabuleiroImp.tabuleiroComJogada(posicao, tabuleiro.getTabuleiro(), character);
                     }
                 }
             } catch (Exception e) {
@@ -69,7 +66,6 @@ public class Teste {
             if (resp.equalsIgnoreCase("SIM")) {
                 reiniciar = false;
                 System.out.println("OK! Jogo encerrado até a próxima");
-                System.exit(0);
             }
         } while (reiniciar);
     }

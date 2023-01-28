@@ -1,7 +1,9 @@
 package br.com.americanas.polotech.aula2.atividadeAula2.Interface;
 
+import br.com.americanas.polotech.aula2.atividadeAula2.entity.Tabuleiro;
+
 public interface TabuleiroDAO {
-    void iniciar();
+    Tabuleiro iniciar();
 
     void mostrarTabuleiro(char[][] tabuleiro);
 

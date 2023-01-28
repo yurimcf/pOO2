@@ -1,18 +1,20 @@
 package br.com.americanas.polotech.aula2.atividadeAula2;
 
 import br.com.americanas.polotech.aula2.atividadeAula2.Interface.TabuleiroDAO;
+import br.com.americanas.polotech.aula2.atividadeAula2.entity.Tabuleiro;
 
 import java.text.DateFormat;
 import java.util.Date;
 
 public class TabuleiroImp implements TabuleiroDAO {
     @Override
-    public void iniciar() {
+    public Tabuleiro iniciar() {
         System.out.println("__________________________________________________\n" +
                 "|                OKUBARO´S GAMES                 |\n" +
                 "|                 JOGO DA VELHA                  |\n" +
                 "|________________________________________________|");
         System.out.println("O jogo do dia: " + DateFormat.getDateInstance().format(new Date()) + "\n*PRECISAMOS DE 2 JOGADORES PARA INICIAR O JOGO*");
+        return new Tabuleiro();
     }
 
     @Override
