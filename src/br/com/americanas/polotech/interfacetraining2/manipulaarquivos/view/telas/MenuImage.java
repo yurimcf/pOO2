@@ -2,6 +2,7 @@ package br.com.americanas.polotech.interfacetraining2.manipulaarquivos.view.tela
 
 import br.com.americanas.polotech.interfacetraining2.manipulaarquivos.model.DAO.HandlerFile;
 import br.com.americanas.polotech.interfacetraining2.manipulaarquivos.model.entity.MFile;
+import br.com.americanas.polotech.interfacetraining2.manipulaarquivos.model.entity.MFileAnnotationTypeEnum;
 
 import java.util.Scanner;
 
@@ -17,9 +18,9 @@ public class MenuImage {
             System.out.println("=========================");
             System.out.println("[1]. Salvar Imagem");
             System.out.println("[2]. Remover Imagem");
-            System.out.println("[3]. Recupere Imagem");
+            System.out.println("[3]. Recupere Imagem (indisponivel)");
             System.out.println("[4]. Listar todas Imagens");
-            System.out.println("[5]. Criar um diretório para images");
+            System.out.println("[5]. Criar/Adicionar diretorio");
             System.out.println("[6]. Back");
             System.out.println("=========================");
             System.out.println("Opção escolhida:");
@@ -41,39 +42,34 @@ public class MenuImage {
                     mFile.setNameFile("image_"+num+".jpg");
                     num++;
                     //mFile.setNameFile(nameImg);
-                    System.out.println("Escreva o diretório para salval a imagem:");
-                    diretory = sc.nextLine();
-                    handlerFile.saveImageFile(diretory,mFile.getContent(),mFile.getNameFile());
+//                    System.out.println("O nome da Pasta que deseja salvar a imagem:");
+//                    String dir = "\\"+ sc.nextLine().trim();
+                    String dir ="";
+
+                    mFile.setPath(diretory + dir);
+                    mFile.setType(MFileAnnotationTypeEnum.IMAGE);
+                    handlerFile.saveImgWithDirectory(mFile);
                     break;
                 case 2:
                     //remover imagem
-
+                    MFile file = new MFile();
                     System.out.println("=========================");
                     System.out.println("Digite o nome da imagem que deseja remover");
                     //String imgRemoveName = sc.nextLine().trim()+".jpg;
                     String imgRemoveName = "image_1"+".jpg";
+                    file.setNameFile(imgRemoveName);
                     System.out.println("=========================");
                     System.out.println("Digite o diretório da imagem à excluir");
-                    diretory = sc.nextLine();
+                    String dirRemove = sc.nextLine();
+                    file.setPath(dirRemove);
 
-                    handlerFile.removeImageFile(diretory, imgRemoveName);
+                    handlerFile.removeImgWithDirectory(file);
 
                     System.out.println("=========================");
 //                    int lastSlashindex = urlImg.lastIndexOf('/');
 //                    mFile.setNameFile(urlImg.substring(lastSlashindex + 1));
                     break;
                 case 3:
-                    //recupere imagem
-                    System.out.println("=========================");
-                    System.out.println("Forneceça o nome da imagem que deseja recuperar:");
-                    //String recoveryImg = sc.nextLine().trim() + ".jpg;
-                    String recoveryImg = "image_1" +".jpg";
-                    System.out.println("=========================");
-                    System.out.println("Digite o diretório da imagem à recuperar");
-                    diretory = sc.nextLine();
-                    handlerFile.recoveryImageFile(diretory);
-
-                    System.out.println("=========================");
                     break;
                 case 4:
                     //listar todos as imagens
@@ -89,9 +85,9 @@ public class MenuImage {
                     System.out.println(diretory);
                     System.out.println("=========================");
                     System.out.println("Digite o Diretório:");
-                    //diretory = sc.nextLine();
-                    diretory = handlerFile.getDirectoryRoot() + "images\\";
-                    handlerFile.createAFolder(diretory);
+                    String dirAdd = sc.nextLine().trim();
+                    handlerFile.createAFolder(diretory + dirAdd);
+                    diretory = diretory + dirAdd;
                     System.out.println("=========================");
                     break;
                 case 6:

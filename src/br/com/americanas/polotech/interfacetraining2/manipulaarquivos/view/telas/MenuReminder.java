@@ -11,23 +11,25 @@ public class MenuReminder {
         Scanner sc = new Scanner(System.in);
         Boolean iskeepGoing = Boolean.TRUE;
         HandlerFile handlerFile = new HandlerFile();
-        String diretory = handlerFile.getDirectoryRoot() + "reminder\\";
+        String diretory = handlerFile.getDirectoryRoot();
+        String dirReminder = handlerFile.getDirectoryRoot() + "reminder\\";
 
         do {
             System.out.println("=========================");
             System.out.println("[1]. Criar Arquivo REMINDER");
             System.out.println("[2]. Remover Arquivo REMINDER");
-            System.out.println("[3]. Recuperar Arquivo REMINDER");
+            System.out.println("[3]. Recuperar(mostrar conteúdo) Arquivo REMINDER");
             System.out.println("[4]. Criar diretório Adicional");
             System.out.println("[5]. Listar Todos ARQUIVOS REMINDER");
             System.out.println("=========================");
             System.out.println("Chosen Option");
             Integer choice = sc.nextInt();
             sc.skip("((?<!\\R)\\s)*");
-            MFile mFile = new MFile();
+            MFile mFile = null;
 
             switch (choice) {
                 case 1:
+                    mFile = new MFile();
                     // criar arquivo
                     System.out.println("Digite o nome do arquivo");
                     String nameFile = sc.nextLine().trim() + ".txt";
@@ -36,18 +38,29 @@ public class MenuReminder {
                     String contentText = sc.nextLine();
                     mFile.setContent(contentText);
                     mFile.setType(MFileAnnotationTypeEnum.REMINDER);
-                    handlerFile.createAFolder(diretory);
-                    handlerFile.saveFile(diretory, mFile.getContent(), mFile.getType(), mFile.getNameFile());
+                    mFile.setPath(diretory);
+                    //handlerFile.createAFolder(diretory);
+                    handlerFile.saveFileWithDirectory(mFile);
                     break;
                 case 2:
                     // remover Arquivos
+                    mFile = new MFile();
                     System.out.println("Digite o nome do arquivo que seje Excluir");
                     String fileName = sc.nextLine().trim() + ".txt";
-                    handlerFile.removeFile(diretory, fileName, MFileAnnotationTypeEnum.REMINDER);
+                    mFile.setNameFile(fileName);
+                    System.out.println("Digite o Diretório do arquivo que deseja excluir");
+                    String dir = sc.nextLine().trim();
+                    mFile.setPath(dir);
+                    handlerFile.removeFileWithDirectory(mFile);
 
                     break;
                 case 3:
                     // recuperar arquivos
+                    mFile = new MFile();
+                    System.out.println("Nome do Arquivo para ler");
+                    mFile.setNameFile(sc.nextLine() + ".txt");
+                    mFile.setPath(dirReminder);
+                    handlerFile.recoveryFileWithDirectory(mFile);
                     break;
                 case 4:
                     // criar diretório adicional

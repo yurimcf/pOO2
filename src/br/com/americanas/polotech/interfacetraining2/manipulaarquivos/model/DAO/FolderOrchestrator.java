@@ -22,7 +22,6 @@ public class FolderOrchestrator implements FolderManagement {
     public void createAFolder(String path) {
         try {
             File directory = new File(path);
-            //File directory = new File("C:\\Users\\yurif\\Music\\BaseDeDados\\images\\");
             boolean status = directory.exists();
             if (!status) {
                 directory.mkdir();

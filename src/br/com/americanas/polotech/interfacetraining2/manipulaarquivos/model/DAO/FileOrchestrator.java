@@ -7,66 +7,53 @@ import br.com.americanas.polotech.interfacetraining2.manipulaarquivos.model.enti
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 public class FileOrchestrator extends FolderOrchestrator implements ImageFileDatabase, FileDatabase {
-    private static List<MFile> mImageFileList = new ArrayList<>();
-    private static List<MFile> mFileList = new ArrayList<>();
-
     public void saveAllListOfFiles(List<MFile> mFileList) {
         for (int i = 0; i < mFileList.size(); i++) {
             MFile mFile = mFileList.get(i);
-            saveFile(null,
-                    mFile.getContent(),
-                    mFile.getType(),
-                    mFile.getNameFile());
+            saveFile(mFile.getPath(), mFile.getContent(), mFile.getType(), mFile.getNameFile());
         }
     }
 
     public void saveAllListOfImageFiles(List<MFile> mImageFileList) {
-
+        for (int i = 0; i < mImageFileList.size(); i++) {
+            MFile file = mImageFileList.get(i);
+            saveImageFile(file.getPath(), file.getContent(), file.getNameFile());
+        }
     }
 
     //metodos do ImageFileDatabase
     @Override
     public void saveImageFile(String directory, String content, String nameFile) {
-        MFile mFile = new MFile();
-        mFile.setNameFile(nameFile);
-        mFile.setContent(content);
-        mFile.setType(MFileAnnotationTypeEnum.IMAGE);
-        mImageFileList.add(mFile);
         BufferedImage image;
         try {
             URL url = new URL(content);
             image = ImageIO.read(url);
-            ImageIO.write(image,
-                    "jpg",
-                    new File(directory + nameFile));
+            ImageIO.write(image, "jpg", new File(directory + nameFile));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public void recoveryImageFile(String directory) {
-        for (MFile mFile : mImageFileList) {
-        }
-        // NÃO SEI O QUE FAZER AQUI
-
-
+    public void recoveryImageFile(String directory, String nameFile) {
+        //não Implementar por agora
     }
 
     @Override
     public void removeImageFile(String directory, String nameFile) {
-        File dir = new File(directory + nameFile);
-        dir.delete();
-
+        File dir = new File(directory + "\\" + nameFile);
+        boolean status = dir.isFile();
+        if (status) {
+            dir.delete();
+        }
     }
 
     @Override
@@ -81,22 +68,15 @@ public class FileOrchestrator extends FolderOrchestrator implements ImageFileDat
     //metodos do FileDatabase
     @Override
     public void saveFile(String directory, String content, MFileAnnotationTypeEnum type, String nameFile) {
-        MFile mFile = new MFile();
-        mFile.setNameFile(nameFile);
-        mFile.setContent(content);
-        mFile.setType(type);
-        mFileList.add(mFile);
-
         File file = new File(directory + nameFile);
         boolean status = file.exists();
         if (!status) {
             try {
                 file.createNewFile();
                 FileWriter fileWriter = new FileWriter(file);
-                fileWriter.write(mFile.getContent());
+                fileWriter.write(content);
                 fileWriter.flush();
                 fileWriter.close();
-
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -107,12 +87,21 @@ public class FileOrchestrator extends FolderOrchestrator implements ImageFileDat
 
     @Override
     public void recoveryFile(String directory, String nameFile) {
-
+        String path = directory + nameFile;
+        File file = new File(directory + nameFile);
+        try (Scanner scanner = new Scanner(file)) {
+            while (scanner.hasNextLine()){
+                String line = scanner.nextLine();
+                System.out.println(line);
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("Arquivo não encontrado");;
+        }
     }
 
     @Override
     public void removeFile(String directory, String nameFile, MFileAnnotationTypeEnum type) {
-        File dir = new File(directory + nameFile);
+        File dir = new File(directory + "\\" + nameFile);
         dir.delete();
     }
 
