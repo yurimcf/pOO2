@@ -1,4 +1,4 @@
-package br.com.americanas.polotech.interfacetraining2.manipulaarquivos.model.DAO.interfaces;
+package br.com.americanas.polotech.interfacetraining2.manipulaarquivos.model.DAO;
 
 import br.com.americanas.polotech.interfacetraining2.manipulaarquivos.model.DAO.interfaces.FolderManagement;
 
@@ -7,10 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FolderOrchestrator implements FolderManagement {
-    List<String > mListPaths = new ArrayList<>();
+    List<String> mListPaths = new ArrayList<>();
+
     public void createFolders(List<String> mListPaths) {
 
     }
+
     public void removeFolders(List<String> mListPaths) {
 
     }
@@ -21,11 +23,12 @@ public class FolderOrchestrator implements FolderManagement {
         try {
             File directory = new File(path);
             //File directory = new File("C:\\Users\\yurif\\Music\\BaseDeDados\\images\\");
-            if(!directory.exists()){
+            boolean status = directory.exists();
+            if (!status) {
                 directory.mkdir();
                 System.out.println("diretório criado com sucesso");
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -33,9 +36,14 @@ public class FolderOrchestrator implements FolderManagement {
     @Override
     public void removeAFolder(String path) {
         File directory = new File(path);
-        if (!directory.isFile()){
-            directory.deleteOnExit();
+        boolean status = directory.isDirectory();
+        if (status) {
+            File[] file = directory.listFiles();
+            for (int i = 0; i < file.length; i++) {
+                removeAFolder(file[i].getPath());
+            }
         }
+        directory.delete();
     }
 
     @Override
