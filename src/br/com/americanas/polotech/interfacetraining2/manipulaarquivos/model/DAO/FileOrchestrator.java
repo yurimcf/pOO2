@@ -40,7 +40,7 @@ public class FileOrchestrator extends FolderOrchestrator implements ImageFileDat
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    } //FEITO
 
     @Override
     public void recoveryImageFile(String directory, String nameFile) {
@@ -48,22 +48,27 @@ public class FileOrchestrator extends FolderOrchestrator implements ImageFileDat
     }
 
     @Override
-    public void removeImageFile(String directory, String nameFile) {
+    public boolean removeImageFile(String directory, String nameFile) {
         File dir = new File(directory + "\\" + nameFile);
         boolean status = dir.isFile();
         if (status) {
             dir.delete();
+            return true;
         }
-    }
+        return false;
+    } // FEITO
 
     @Override
     public void listAllImageFiles(String diretory) {
         File dirFiles = new File(diretory);
         File[] files = dirFiles.listFiles();
         List<File> mImageFileList = new ArrayList<>(Arrays.stream(files).toList());
-        mImageFileList.forEach(System.out::println);
-
-    }
+        mImageFileList.forEach(file -> {
+            int lastSlashIndex = file.toString().lastIndexOf('\\');
+            String nameFile = file.toString().substring(lastSlashIndex + 1);
+            System.out.println(nameFile);
+        });
+    } // FEITO IMPRIMIR SÓ O NOME
 
     //metodos do FileDatabase
     @Override

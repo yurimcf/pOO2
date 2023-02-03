@@ -1,9 +1,10 @@
 package br.com.americanas.polotech.interfacetraining2.manipulaarquivos.control;
 
 import br.com.americanas.polotech.interfacetraining2.manipulaarquivos.model.DAO.HandlerFile;
-import br.com.americanas.polotech.interfacetraining2.manipulaarquivos.model.entity.MFile;
 import br.com.americanas.polotech.interfacetraining2.manipulaarquivos.view.telas.MenuImage;
+import br.com.americanas.polotech.interfacetraining2.manipulaarquivos.view.telas.MenuImportant;
 import br.com.americanas.polotech.interfacetraining2.manipulaarquivos.view.telas.MenuReminder;
+import br.com.americanas.polotech.interfacetraining2.manipulaarquivos.view.telas.MenuSimple;
 
 import java.util.Scanner;
 
@@ -11,11 +12,13 @@ public class TesteAtividade1 {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        MFile mFile = new MFile();
         Boolean iskeepGoing = Boolean.TRUE;
         HandlerFile handlerFile = new HandlerFile();
-//        System.out.println("Digete o diretório Raiz:");
-//        handlerFile.setDirectoryRoot(sc.nextLine());
+        System.out.println("Digite o diretório Raiz:");
+//        String dirRoot = sc.nextLine() +"\\";
+        String dirRoot = "E:\\zbancoDeDados" +"\\";
+        handlerFile.setDirectoryRoot(dirRoot);
+
         do {
             System.out.println("=========================");
             System.out.println("[1]. Ir para Menu Imagem");
@@ -30,16 +33,16 @@ public class TesteAtividade1 {
 
             switch (choice) {
                 case 1:
-                    MenuImage.MenuImageCrud();
+                    MenuImage.MenuImageCrud(handlerFile);
                     break;
                 case 2:
                     MenuReminder.MenuReminderCrud();
                     break;
                 case 3:
-                    TesteAtividade1.MenuImportant();
+                    MenuImportant.MenuImportantCrud();
                     break;
                 case 4:
-                    TesteAtividade1.MenuSimples();
+                    MenuSimple.MenuSimpleCrud();
                     break;
                 case 5:
                     iskeepGoing = Boolean.FALSE;
@@ -50,79 +53,5 @@ public class TesteAtividade1 {
                     System.out.println("Invalid option");
             }
         } while (iskeepGoing);
-    }
-
-
-    public static void MenuImportant() {
-        Scanner sc = new Scanner(System.in);
-        Boolean iskeepGoing = Boolean.TRUE;
-        do {
-            System.out.println("=========================");
-            System.out.println("=========================");
-            System.out.println("Chosen Option");
-            Integer choice = sc.nextInt();
-
-            switch (choice) {
-                case 1:
-                    System.out.println("=========================");
-                    System.out.println("=========================");
-                    break;
-                case 2:
-                    System.out.println("=========================");
-                    System.out.println("=========================");
-                    break;
-                case 3:
-                    System.out.println("=========================");
-                    System.out.println("=========================");
-                    break;
-                case 4:
-                    System.out.println("=========================");
-                    System.out.println("=========================");
-                    break;
-                case 5:
-                    iskeepGoing = Boolean.FALSE;
-                default:
-                    System.out.println("Invalid option");
-            }
-
-
-        } while (iskeepGoing);
-
-    }
-
-    public static void MenuSimples() {
-        Scanner sc = new Scanner(System.in);
-        Boolean iskeepGoing = Boolean.TRUE;
-        do {
-            System.out.println("=========================");
-            System.out.println("=========================");
-            System.out.println("Chosen Option");
-            Integer choice = sc.nextInt();
-
-            switch (choice) {
-                case 1:
-                    System.out.println("=========================");
-                    System.out.println("=========================");
-                    break;
-                case 2:
-                    System.out.println("=========================");
-                    System.out.println("=========================");
-                    break;
-                case 3:
-                    System.out.println("=========================");
-                    System.out.println("=========================");
-                    break;
-                case 4:
-                    System.out.println("=========================");
-                    System.out.println("=========================");
-                    break;
-                case 5:
-                    iskeepGoing = Boolean.FALSE;
-                default:
-                    System.out.println("Invalid option");
-            }
-
-        } while (iskeepGoing);
-
     }
 }

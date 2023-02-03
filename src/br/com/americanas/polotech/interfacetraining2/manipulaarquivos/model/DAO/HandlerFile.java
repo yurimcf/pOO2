@@ -3,13 +3,13 @@ package br.com.americanas.polotech.interfacetraining2.manipulaarquivos.model.DAO
 import br.com.americanas.polotech.interfacetraining2.manipulaarquivos.model.entity.MFile;
 import br.com.americanas.polotech.interfacetraining2.manipulaarquivos.model.entity.MFileAnnotationTypeEnum;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class HandlerFile extends FileOrchestrator {
     private String directoryRoot = "C:\\Users\\yurif\\Music\\BaseDeDados\\";
     static List<MFile> mFileList = new ArrayList<>();
-    static List<MFile> mImageFileList = new ArrayList<>();
 
     public void setDirectoryRoot(String directoryRoot) {
         this.directoryRoot = directoryRoot;
@@ -19,7 +19,7 @@ public class HandlerFile extends FileOrchestrator {
         return directoryRoot;
     }
 
-    public void saveAllImg() {
+    public void saveAllImg(List <MFile> mImageFileList) {
         saveAllListOfImageFiles(mImageFileList);
     }
 
@@ -37,7 +37,6 @@ public class HandlerFile extends FileOrchestrator {
 
     private MFile knowType (MFile mFile){
         switch (mFile.getType()) {
-            case IMAGE -> mFile.setPath(mFile.getPath() + "image\\");
             case IMPORTANT -> mFile.setPath(mFile.getPath() + "important\\");
             case REMINDER -> mFile.setPath(mFile.getPath() + "reminder\\");
             default -> mFile.setPath(mFile.getPath() + "");
@@ -69,21 +68,17 @@ public class HandlerFile extends FileOrchestrator {
         saveImageFile(mFile.getPath(),
                 mFile.getContent(),
                 mFile.getNameFile());
-        mImageFileList.add(mFile);
-    }
+    } // FEITO
 
-    public void removeImgWithDirectory(MFile mFile) {
-        removeImageFile(mFile.getPath(),
-                mFile.getNameFile());
-    }
+    public boolean removeImg(MFile mFile) {
+        if(removeImageFile(mFile.getPath(),
+                mFile.getNameFile())) {
+            return true;
+        }
+        return false;
+    } //FEITO
 
-    public void recoveryImgWithDirectory(MFile mFile) {
-        // não implementar por agora
-        recoveryImageFile(mFile.getPath(),
-                mFile.getNameFile());
-    }
-
-    public void createSpecificFolder(MFile mFile) {
+    private void createSpecificFolder(MFile mFile) {
             createAFolder(mFile.getPath());
     }
 }
