@@ -2,7 +2,7 @@ package br.com.americanas.polotech.interfacetraining2.manipulaarquivos.view.tela
 
 import br.com.americanas.polotech.interfacetraining2.manipulaarquivos.model.DAO.HandlerFile;
 import br.com.americanas.polotech.interfacetraining2.manipulaarquivos.model.entity.MFile;
-import br.com.americanas.polotech.interfacetraining2.manipulaarquivos.model.entity.MFileAnnotationTypeEnum;
+import br.com.americanas.polotech.interfacetraining2.manipulaarquivos.model.enums.MFileAnnotationTypeEnum;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +12,8 @@ public class MenuImage {
     public static void MenuImageCrud(HandlerFile handlerFile) {
         Scanner sc = new Scanner(System.in);
         Boolean iskeepGoing = Boolean.TRUE;
-        String diretory = handlerFile.getDirectoryRoot() + "images\\";
-        List <MFile> saveAllImgsList;
+        String diretory = handlerFile.getDirRoot() + "images\\";
+        List<MFile> saveAllImgsList;
         do {
             System.out.println("=========================");
             System.out.println("[1]. Salvar Imagem");
@@ -25,16 +25,17 @@ public class MenuImage {
             System.out.println("Opção escolhida:");
             Integer choice = sc.nextInt();
             sc.skip("((?<!\\R)\\s)*");
+            MFile mFile = null;
 
             switch (choice) {
                 case 1:
-                    // adiconar imagem
-                    MFile mFile = new MFile();
+                    // adiconar
+                    mFile = new MFile();
                     System.out.println("Escreva a URL da imagem");
                     String urlImg = sc.nextLine();
-                    mFile.setContent(urlImg);
                     System.out.println("Escreva no mome da Imagem");
                     String nameImg = sc.nextLine().trim() + ".jpg";
+                    mFile.setContent(urlImg);
                     mFile.setNameFile(nameImg);
                     mFile.setPath(diretory);
                     mFile.setType(MFileAnnotationTypeEnum.IMAGE);
@@ -43,13 +44,13 @@ public class MenuImage {
 
                 case 2:
                     //remover imagem
-                    MFile file = new MFile();
+                    mFile = new MFile();
                     System.out.println("=========================");
                     System.out.println("Digite o nome da imagem que deseja remover");
                     String imgRemoveName = sc.nextLine().trim() + ".jpg";
-                    file.setNameFile(imgRemoveName);
-                    file.setPath(diretory);
-                    boolean status = handlerFile.removeImg(file);
+                    mFile.setNameFile(imgRemoveName);
+                    mFile.setPath(diretory);
+                    boolean status = handlerFile.removeImg(mFile);
                     if (status) {
                         System.out.println("imagem excluido com sucesso");
                     } else {
@@ -72,20 +73,20 @@ public class MenuImage {
                         MFile mFileList = new MFile();
                         System.out.println("Escreva a URL da imagem");
                         String urlImgs = sc.nextLine();
-                        mFileList.setContent(urlImgs);
                         System.out.println("Escreva no mome da Imagem");
                         String name = sc.nextLine().trim() + ".jpg";
+                        mFileList.setContent(urlImgs);
                         mFileList.setNameFile(name);
                         mFileList.setPath(diretory);
                         mFileList.setType(MFileAnnotationTypeEnum.IMAGE);
                         saveAllImgsList.add(mFileList);
                         System.out.println("Adicionar outra Musica? [S/N]");
                         String keep = sc.nextLine();
-                        if (!keep.equalsIgnoreCase("s")){
+                        if (!keep.equalsIgnoreCase("s")) {
                             keepIt = false;
                         }
-                    } while(keepIt);
-                    handlerFile.saveAllImg(saveAllImgsList);
+                    } while (keepIt);
+                    handlerFile.saveListImg(saveAllImgsList);
                     break;
 
                 case 5:
