@@ -7,7 +7,10 @@ import br.com.americanas.polotech.interfacetraining2.manipulaarquivos.model.enum
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -64,9 +67,9 @@ public class FileOrchestrator extends FolderOrchestrator implements ImageFileDat
         File[] files = dirFiles.listFiles();
         List<File> mImageFileList = new ArrayList<>(Arrays.stream(files).toList());
         mImageFileList.forEach(file -> {
-            int lastSlashIndex = file.toString().lastIndexOf('\\');
-            String nameFile = file.toString().substring(lastSlashIndex + 1);
-            System.out.println(nameFile);
+            if (file.isFile()) {
+                System.out.println(file.getName());
+            }
         });
     } // FEITO IMPRIMIR SÓ O NOME
 
@@ -92,23 +95,27 @@ public class FileOrchestrator extends FolderOrchestrator implements ImageFileDat
 
     @Override
     public void recoveryFile(String directory, String nameFile) {
-        String path = directory + nameFile;
         File file = new File(directory + nameFile);
         try (Scanner scanner = new Scanner(file)) {
-            while (scanner.hasNextLine()){
+            while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 System.out.println(line);
             }
         } catch (FileNotFoundException e) {
-            System.out.println("Arquivo não encontrado");;
+            System.out.println("Arquivo não encontrado");
+            ;
         }
     }
 
     @Override
     public boolean removeFile(String directory, String nameFile, MFileAnnotationTypeEnum type) {
         File dir = new File(directory + "\\" + nameFile);
-        dir.delete();
-        return true;
+        boolean exist = dir.exists();
+        if (exist) {
+            dir.delete();
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -117,9 +124,12 @@ public class FileOrchestrator extends FolderOrchestrator implements ImageFileDat
         File[] files = dirFiles.listFiles();
         List<File> mImageFileList = new ArrayList<>(Arrays.stream(files).toList());
         mImageFileList.forEach(file -> {
-            int lastSlashIndex = file.toString().lastIndexOf('\\');
-            String nameFile = file.toString().substring(lastSlashIndex + 1);
-            System.out.println(nameFile);
+            if (file.isFile()) {
+                System.out.println(file.getName()); // mexi aqui
+            }
         });
+
     }
 }
+//            int lastSlashIndex = file.toString().lastIndexOf('\\');
+//            String nameFile = file.toString().substring(lastSlashIndex + 1);

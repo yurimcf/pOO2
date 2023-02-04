@@ -12,8 +12,6 @@ public class MenuFile {
     public static void MenuFileCrud(HandlerFile handlerFile) {
         Scanner sc = new Scanner(System.in);
         Boolean iskeepGoing = Boolean.TRUE;
-        String diretory = handlerFile.getDirRoot();
-        String dirReminder = diretory + "reminder\\";
         List<MFile> saveAllFiles;
 
         do {
@@ -21,7 +19,7 @@ public class MenuFile {
             System.out.println("[2]. Remover Arquivo");
             System.out.println("[3]. Recuperar (mostrar conteúdo) Arquivo");
             System.out.println("[4]. Listar Todos ARQUIVOS REMINDER");
-            System.out.println("[5]. Criar vários arquivos (+ de 1)");
+            System.out.println("[5]. Criar vários arquivos (+ de 1)"); // feito chekar
             System.out.println("[6]. Voltar");
             System.out.println();
             System.out.println("Chosen Option");
@@ -31,6 +29,7 @@ public class MenuFile {
             String nameFile = null;
             String contentText = null;
             MFileAnnotationTypeEnum type = null;
+            Integer value = null;
 
             switch (choice) {
                 case 1:
@@ -42,18 +41,17 @@ public class MenuFile {
                     contentText = sc.nextLine();
 
                     System.out.println(
-                            "Que tipo é esse arquivos?\n"+
-                            "[1]. Reminder\n" +
-                            "[2]. Important\n" +
-                            "[3]. Simples");
-                    int value = sc.nextInt();
+                            "Que tipo é esse arquivos?\n" +
+                                    "[1]. Reminder\n" +
+                                    "[2]. Important\n" +
+                                    "[3]. Simples");
+                    value = sc.nextInt();
                     sc.skip("((?<!\\R)\\s)*");
                     type = MFileAnnotationTypeEnum.values()[value];
                     if (value > 0 && value < MFileAnnotationTypeEnum.values().length) {
                         mFile.setType(type);
                         mFile.setNameFile(nameFile);
                         mFile.setContent(contentText);
-                        mFile.setPath(diretory);
                         handlerFile.saveFileByDirectory(mFile);
                     } else {
                         System.out.println("Escolha um dos 3 valores");
@@ -65,16 +63,28 @@ public class MenuFile {
                     mFile = new MFile();
                     System.out.println("Digite o nome do arquivo que seje Excluir");
                     String fileName = sc.nextLine().trim() + ".txt";
-//                    System.out.println("Digite o Diretório do arquivo que deseja excluir");
-//                    String dir = sc.nextLine().trim();
-                    mFile.setNameFile(fileName);
-                    mFile.setPath(dirReminder);
-                    boolean status = handlerFile.removeFileWithDirectory(mFile);
-                    if (status) {
-                        System.out.println("Arquivo excluido com sucesso");
+                    System.out.println(
+                            "Que tipo é esse arquivos?\n" +
+                                    "[1]. Reminder\n" +
+                                    "[2]. Important\n" +
+                                    "[3]. Simples\n" +
+                                    "Escolha: ");
+                    value = sc.nextInt();
+                    sc.skip("((?<!\\R)\\s)*");
+                    type = MFileAnnotationTypeEnum.values()[value];
+                    if (value > 0 && value < MFileAnnotationTypeEnum.values().length) {
+                        mFile.setNameFile(fileName);
+                        mFile.setType(type);
+                        boolean status = handlerFile.removeFileByDirectory(mFile);
+                        if (status) {
+                            System.out.println("Arquivo excluido com sucesso");
+                        } else {
+                            System.out.println("Erro ao excluir arquivo");
+                        }
                     } else {
-                        System.out.println("Erro ao excluir arquivo");
+                        System.out.println("Escolha um dos 3 valores");
                     }
+
                     break;
 
                 case 3:
@@ -82,32 +92,63 @@ public class MenuFile {
                     mFile = new MFile();
                     System.out.println("Nome do Arquivo para ler");
                     mFile.setNameFile(sc.nextLine() + ".txt");
-                    mFile.setPath(dirReminder);
-                    handlerFile.recoveryFileWithDirectory(mFile);
+                    boolean find = handlerFile.searchFile(mFile);
+                    if (!find) {
+                        System.out.println("Arquivo não encontrado");
+                    }
+                    System.out.println();
                     break;
+
                 case 4:
                     // Listar arquivos
-                    System.out.println("=========================");
-                    System.out.println("Listando Todas as Imagens");
-                    handlerFile.listAllFiles(dirReminder);
-                    System.out.println("=========================");
+                    mFile = new MFile();
+                    System.out.println(
+                            "Listar qual pasta arquivos?\n" +
+                                    "[1]. Reminder\n" +
+                                    "[2]. Important\n" +
+                                    "[3]. Simples\n" +
+                                    "Escolha: ");
+                    value = sc.nextInt();
+                    type = MFileAnnotationTypeEnum.values()[value];
+                    if (value > 0 && value < MFileAnnotationTypeEnum.values().length) {
+                        mFile.setType(type);
+                        handlerFile.knowTypePath(mFile);
+                        System.out.println("Listando Todas os Arquivos");
+                        handlerFile.listAllFiles(mFile.getPath());
+                        System.out.println();
+                    } else {
+                        System.out.println("Escolha um dos 3 valores");
+                    }
                     break;
-                case 5:
+
+                case 5: // checkar isso
+
                     //criar varios arquivos
                     boolean keepIt = true;
                     saveAllFiles = new ArrayList<>();
+                    MFile mFileList;
                     do {
-                        MFile mFileList = new MFile();
-                        System.out.println("Escreva o nome do aquivo");
-                        nameFile = sc.nextLine();
-                        System.out.println("Escreva o texto do arquivo");
+                        mFileList = new MFile();
+                        System.out.println("Digite o nome do arquivo");
+                        nameFile = sc.nextLine().trim() + ".txt";
+                        System.out.println("Digite o Texto do arquivo");
                         contentText = sc.nextLine();
-                        System.out.println("Que que arquivo é esse?");
-                        // tem que ter alguma coisa aqui
-                        mFileList.setNameFile(nameFile);
-                        mFileList.setPath(dirReminder);
-                        mFileList.setContent(contentText);
-                        mFileList.setType(MFileAnnotationTypeEnum.REMINDER);
+
+                        System.out.println(
+                                "Que tipo é esse arquivos?\n" +
+                                        "[1]. Reminder\n" +
+                                        "[2]. Important\n" +
+                                        "[3]. Simples");
+                        value = sc.nextInt();
+                        sc.skip("((?<!\\R)\\s)*");
+                        type = MFileAnnotationTypeEnum.values()[value];
+                        if (value > 0 && value < MFileAnnotationTypeEnum.values().length) {
+                            mFileList.setType(type);
+                            mFileList.setNameFile(nameFile);
+                            mFileList.setContent(contentText);
+                        } else {
+                            System.out.println("Escolha um dos 3 valores");
+                        }
                         saveAllFiles.add(mFileList);
                         System.out.println("Adicionar outro arquivo? [S/N]");
                         String keep = sc.nextLine();
