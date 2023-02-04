@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FolderOrchestrator implements FolderManagement {
-    List<String> mListPaths = new ArrayList<>();
-
     public void createFolders(List<String> mListPaths) {
 
     }
@@ -47,6 +45,5 @@ public class FolderOrchestrator implements FolderManagement {
 
     @Override
     public void listAllFoldersCreated() {
-
     }
 }
