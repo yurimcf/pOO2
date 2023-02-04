@@ -2,13 +2,11 @@ package br.com.americanas.polotech.interfacetraining2.manipulaarquivos.control;
 
 import br.com.americanas.polotech.interfacetraining2.manipulaarquivos.model.DAO.HandlerFile;
 import br.com.americanas.polotech.interfacetraining2.manipulaarquivos.view.telas.MenuImage;
-import br.com.americanas.polotech.interfacetraining2.manipulaarquivos.view.telas.MenuImportant;
-import br.com.americanas.polotech.interfacetraining2.manipulaarquivos.view.telas.MenuReminder;
-import br.com.americanas.polotech.interfacetraining2.manipulaarquivos.view.telas.MenuSimple;
+import br.com.americanas.polotech.interfacetraining2.manipulaarquivos.view.telas.MenuFile;
 
 import java.util.Scanner;
 
-public class TesteAtividade1 {
+public class MainClass {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -22,29 +20,23 @@ public class TesteAtividade1 {
         do {
             System.out.println("=========================");
             System.out.println("[1]. Ir para Menu Imagem");
-            System.out.println("[2]. Ir para Menu Reminder");
-            System.out.println("[3]. Ir para Menu Important");
-            System.out.println("[4]. Ir para Menu Simple");
-            System.out.println("[5]. Exit");
+            System.out.println("[2]. Ir para Menu Files");
+            System.out.println("[3]. Sair");
             System.out.println("=========================");
             System.out.println("Chosen Option");
             Integer choice = sc.nextInt();
+            sc.skip("((?<!\\R)\\s)*");
 
             switch (choice) {
                 case 1:
                     MenuImage.MenuImageCrud(handlerFile); //Feito funcional
                     break;
                 case 2:
-                    MenuReminder.MenuReminderCrud(handlerFile);
+                    MenuFile.MenuFileCrud(handlerFile);
                     break;
                 case 3:
-                    MenuImportant.MenuImportantCrud(handlerFile);
-                    break;
-                case 4:
-                    MenuSimple.MenuSimpleCrud(handlerFile);
-                    break;
-                case 5:
                     iskeepGoing = Boolean.FALSE;
+                    break;
                 default:
                     System.out.println("Invalid option");
             }
