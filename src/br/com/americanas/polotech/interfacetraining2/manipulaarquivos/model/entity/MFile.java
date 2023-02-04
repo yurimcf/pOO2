@@ -1,6 +1,8 @@
 package br.com.americanas.polotech.interfacetraining2.manipulaarquivos.model.entity;
 
 
+import br.com.americanas.polotech.interfacetraining2.manipulaarquivos.model.enums.MFileAnnotationTypeEnum;
+
 public class MFile {
     private String nameFile;
     private String path;

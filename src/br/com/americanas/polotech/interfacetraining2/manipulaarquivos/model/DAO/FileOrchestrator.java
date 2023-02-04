@@ -3,7 +3,7 @@ package br.com.americanas.polotech.interfacetraining2.manipulaarquivos.model.DAO
 import br.com.americanas.polotech.interfacetraining2.manipulaarquivos.model.DAO.interfaces.FileDatabase;
 import br.com.americanas.polotech.interfacetraining2.manipulaarquivos.model.DAO.interfaces.ImageFileDatabase;
 import br.com.americanas.polotech.interfacetraining2.manipulaarquivos.model.entity.MFile;
-import br.com.americanas.polotech.interfacetraining2.manipulaarquivos.model.entity.MFileAnnotationTypeEnum;
+import br.com.americanas.polotech.interfacetraining2.manipulaarquivos.model.enums.MFileAnnotationTypeEnum;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -105,9 +105,10 @@ public class FileOrchestrator extends FolderOrchestrator implements ImageFileDat
     }
 
     @Override
-    public void removeFile(String directory, String nameFile, MFileAnnotationTypeEnum type) {
+    public boolean removeFile(String directory, String nameFile, MFileAnnotationTypeEnum type) {
         File dir = new File(directory + "\\" + nameFile);
         dir.delete();
+        return true;
     }
 
     @Override
@@ -115,6 +116,10 @@ public class FileOrchestrator extends FolderOrchestrator implements ImageFileDat
         File dirFiles = new File(directory);
         File[] files = dirFiles.listFiles();
         List<File> mImageFileList = new ArrayList<>(Arrays.stream(files).toList());
-        mImageFileList.forEach(System.out::println);
+        mImageFileList.forEach(file -> {
+            int lastSlashIndex = file.toString().lastIndexOf('\\');
+            String nameFile = file.toString().substring(lastSlashIndex + 1);
+            System.out.println(nameFile);
+        });
     }
 }

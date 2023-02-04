@@ -1,54 +1,55 @@
 package br.com.americanas.polotech.interfacetraining2.manipulaarquivos.model.DAO;
 
 import br.com.americanas.polotech.interfacetraining2.manipulaarquivos.model.entity.MFile;
-import br.com.americanas.polotech.interfacetraining2.manipulaarquivos.model.entity.MFileAnnotationTypeEnum;
+import br.com.americanas.polotech.interfacetraining2.manipulaarquivos.model.enums.MFileAnnotationTypeEnum;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 public class HandlerFile extends FileOrchestrator {
-    private String directoryRoot = "C:\\Users\\yurif\\Music\\BaseDeDados\\";
-    static List<MFile> mFileList = new ArrayList<>();
+    private String dirRoot = null;
 
-    public void setDirectoryRoot(String directoryRoot) {
-        this.directoryRoot = directoryRoot;
+    public void setDirRoot(String dirRoot) {
+        this.dirRoot = dirRoot;
     }
 
-    public String getDirectoryRoot() {
-        return directoryRoot;
+    public String getDirRoot() {
+        return dirRoot;
     }
 
-    public void saveAllImg(List <MFile> mImageFileList) {
+    public void saveListImg(List<MFile> mImageFileList) {
         saveAllListOfImageFiles(mImageFileList);
+    }
+    public void saveListFiles(List<MFile> mFileList) {
+        saveAllListOfFiles(mFileList);
     }
 
 
     // metodos para arquivos(geral)
-    public void saveFileWithDirectory(MFile mFile) {
+    public void saveFileByDirectory(MFile mFile) {
         mFile = knowType(mFile);
         createSpecificFolder(mFile);
         saveFile(mFile.getPath(),
                 mFile.getContent(),
                 mFile.getType(),
                 mFile.getNameFile());
-        mFileList.add(mFile);
     }
 
-    private MFile knowType (MFile mFile){
+    private MFile knowType(MFile mFile) {
         switch (mFile.getType()) {
-            case IMPORTANT -> mFile.setPath(mFile.getPath() + "important\\");
-            case REMINDER -> mFile.setPath(mFile.getPath() + "reminder\\");
-            default -> mFile.setPath(mFile.getPath() + "");
+            case IMPORTANT -> mFile.setPath(dirRoot + "important\\");
+            case REMINDER -> mFile.setPath(dirRoot + "reminder\\");
+            default -> mFile.setPath(dirRoot + "");
         }
         return mFile;
     }
 
-    public void removeFileWithDirectory(MFile mFile) {
-        removeFile(mFile.getPath(),
+    public boolean removeFileWithDirectory(MFile mFile) {
+        if (removeFile(mFile.getPath(),
                 mFile.getNameFile(),
-                mFile.getType());
-        mFileList.remove(mFile.getNameFile());
+                mFile.getType())) {
+            return true;
+        }
+        return false;
     }
 
     public void recoveryFileWithDirectory(MFile mFile) {
@@ -56,14 +57,16 @@ public class HandlerFile extends FileOrchestrator {
                 mFile.getNameFile());
     }
 
-    public void listAllFilesSaved(String Directory) {
-        listAllFiles(Directory);
-    }
+
+
+
+
+
 
     //metodos para imagem
     public void saveImgWithDirectory(MFile mFile) {
         if (mFile.getType() == MFileAnnotationTypeEnum.IMAGE) {
-            createAFolder(directoryRoot + "\\images");
+            createAFolder(dirRoot + "\\images");
         }
         saveImageFile(mFile.getPath(),
                 mFile.getContent(),
@@ -71,7 +74,7 @@ public class HandlerFile extends FileOrchestrator {
     } // FEITO
 
     public boolean removeImg(MFile mFile) {
-        if(removeImageFile(mFile.getPath(),
+        if (removeImageFile(mFile.getPath(),
                 mFile.getNameFile())) {
             return true;
         }
@@ -79,6 +82,6 @@ public class HandlerFile extends FileOrchestrator {
     } //FEITO
 
     private void createSpecificFolder(MFile mFile) {
-            createAFolder(mFile.getPath());
+        createAFolder(mFile.getPath());
     }
 }

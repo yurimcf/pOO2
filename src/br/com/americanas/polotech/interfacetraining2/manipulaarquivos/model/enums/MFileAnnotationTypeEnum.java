@@ -1,4 +1,4 @@
-package br.com.americanas.polotech.interfacetraining2.manipulaarquivos.model.entity;
+package br.com.americanas.polotech.interfacetraining2.manipulaarquivos.model.enums;
 
 public enum MFileAnnotationTypeEnum {
     IMAGE,
