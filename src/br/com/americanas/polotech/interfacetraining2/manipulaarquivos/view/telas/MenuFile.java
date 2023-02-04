@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class MenuReminder {
-    public static void MenuReminderCrud(HandlerFile handlerFile) {
+public class MenuFile {
+    public static void MenuFileCrud(HandlerFile handlerFile) {
         Scanner sc = new Scanner(System.in);
         Boolean iskeepGoing = Boolean.TRUE;
         String diretory = handlerFile.getDirRoot();
@@ -17,14 +17,13 @@ public class MenuReminder {
         List<MFile> saveAllFiles;
 
         do {
-            System.out.println("=========================");
-            System.out.println("[1]. Criar Arquivo REMINDER");
-            System.out.println("[2]. Remover Arquivo REMINDER");
-            System.out.println("[3]. Recuperar(mostrar conteúdo) Arquivo REMINDER");
+            System.out.println("[1]. Criar Arquivo");
+            System.out.println("[2]. Remover Arquivo");
+            System.out.println("[3]. Recuperar (mostrar conteúdo) Arquivo");
             System.out.println("[4]. Listar Todos ARQUIVOS REMINDER");
             System.out.println("[5]. Criar vários arquivos (+ de 1)");
             System.out.println("[6]. Voltar");
-            System.out.println("=========================");
+            System.out.println();
             System.out.println("Chosen Option");
             Integer choice = sc.nextInt();
             sc.skip("((?<!\\R)\\s)*");
@@ -46,7 +45,7 @@ public class MenuReminder {
                             "Que tipo é esse arquivos?\n"+
                             "[1]. Reminder\n" +
                             "[2]. Important\n" +
-                            "[3]. Simples\n");
+                            "[3]. Simples");
                     int value = sc.nextInt();
                     sc.skip("((?<!\\R)\\s)*");
                     type = MFileAnnotationTypeEnum.values()[value];
