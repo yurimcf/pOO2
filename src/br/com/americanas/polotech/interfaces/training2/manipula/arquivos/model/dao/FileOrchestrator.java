@@ -1,9 +1,9 @@
 package br.com.americanas.polotech.interfaces.training2.manipula.arquivos.model.dao;
 
-import br.com.americanas.polotech.interfaces.training2.manipula.arquivos.model.entity.MFile;
-import br.com.americanas.polotech.interfaces.training2.manipula.arquivos.model.enums.MFileAnnotationType;
 import br.com.americanas.polotech.interfaces.training2.manipula.arquivos.model.dao.interfaces.FileDatabase;
 import br.com.americanas.polotech.interfaces.training2.manipula.arquivos.model.dao.interfaces.ImageFileDatabase;
+import br.com.americanas.polotech.interfaces.training2.manipula.arquivos.model.entity.MFile;
+import br.com.americanas.polotech.interfaces.training2.manipula.arquivos.model.enums.MFileAnnotationType;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -43,7 +43,7 @@ public class FileOrchestrator extends FolderOrchestrator implements ImageFileDat
         } catch (IOException e) {
             e.printStackTrace();
         }
-    } //FEITO
+    }
 
     @Override
     public void recoveryImageFile(String directory, String nameFile) {
@@ -59,11 +59,11 @@ public class FileOrchestrator extends FolderOrchestrator implements ImageFileDat
             return true;
         }
         return false;
-    } // FEITO
+    }
 
     @Override
-    public void listAllImageFiles(String diretory) {
-        File dirFiles = new File(diretory);
+    public void listAllImageFiles(String directory) {
+        File dirFiles = new File(directory);
         File[] files = dirFiles.listFiles();
         List<File> mImageFileList = new ArrayList<>(Arrays.stream(files).toList());
         mImageFileList.forEach(file -> {
@@ -71,7 +71,7 @@ public class FileOrchestrator extends FolderOrchestrator implements ImageFileDat
                 System.out.println(file.getName());
             }
         });
-    } // FEITO IMPRIMIR SÓ O NOME
+    }
 
     //metodos do FileDatabase
     @Override
@@ -124,7 +124,7 @@ public class FileOrchestrator extends FolderOrchestrator implements ImageFileDat
         List<File> mImageFileList = new ArrayList<>(Arrays.stream(files).toList());
         mImageFileList.forEach(file -> {
             if (file.isFile()) {
-                System.out.println(file.getName()); // mexi aqui
+                System.out.println(file.getName());
             }
         });
 

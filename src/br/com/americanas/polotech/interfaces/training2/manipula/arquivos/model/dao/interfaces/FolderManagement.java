@@ -2,6 +2,8 @@ package br.com.americanas.polotech.interfaces.training2.manipula.arquivos.model.
 
 public interface FolderManagement {
     void createAFolder(String path);
+
     void removeAFolder(String path);
-    void listAllFoldersCreated();
+
+    void listAllFoldersCreated(String path);
 }

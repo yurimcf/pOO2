@@ -38,10 +38,7 @@ public class HandlerFile extends FileOrchestrator {
     public void saveFileByDirectory(MFile mFile) {
         mFile = knowTypePath(mFile);
         createSpecificFolder(mFile);
-        saveFile(mFile.getPath(),
-                mFile.getContent(),
-                mFile.getType(),
-                mFile.getNameFile());
+        saveFile(mFile.getPath(), mFile.getContent(), mFile.getType(), mFile.getNameFile());
     }
 
     public MFile knowTypePath(MFile mFile) {
@@ -55,9 +52,7 @@ public class HandlerFile extends FileOrchestrator {
 
     public boolean removeFileByDirectory(MFile mFile) {
         mFile = knowTypePath(mFile);
-        if (removeFile(mFile.getPath(),
-                mFile.getNameFile(),
-                mFile.getType())) {
+        if (removeFile(mFile.getPath(), mFile.getNameFile(), mFile.getType())) {
             return true;
         }
         return false;
@@ -84,8 +79,7 @@ public class HandlerFile extends FileOrchestrator {
             if (fileName.equalsIgnoreCase(mFileName)) {
                 int index = file.getPath().lastIndexOf('\\');
                 mFile.setPath(file.toString().substring(0, index).concat("\\"));
-                recoveryFile(mFile.getPath(),
-                        mFile.getNameFile());
+                recoveryFile(mFile.getPath(), mFile.getNameFile());
                 return true;
             }
         }
@@ -98,14 +92,11 @@ public class HandlerFile extends FileOrchestrator {
         if (mFile.getType() == MFileAnnotationType.IMAGE) {
             createAFolder(dirRoot + "\\images");
         }
-        saveImageFile(mFile.getPath(),
-                mFile.getContent(),
-                mFile.getNameFile());
-    } // FEITO
+        saveImageFile(mFile.getPath(), mFile.getContent(), mFile.getNameFile());
+    }
 
     public boolean removeImg(MFile mFile) {
-        if (removeImageFile(mFile.getPath(),
-                mFile.getNameFile())) {
+        if (removeImageFile(mFile.getPath(), mFile.getNameFile())) {
             return true;
         }
         return false;
@@ -129,8 +120,7 @@ public class HandlerFile extends FileOrchestrator {
                 System.out.println(file.getName());
             });
 
-            System.out.println("Voce está tendando excluir uma Pasta com arquivos," +
-                    " Continuar?" + "[S/N]");
+            System.out.println("Voce está tendando excluir uma Pasta com arquivos," + " Continuar?" + "[S/N]");
             String keep = sc.nextLine();
             if (keep.equalsIgnoreCase("S")) {
                 removeFolders(listString);
@@ -138,15 +128,16 @@ public class HandlerFile extends FileOrchestrator {
         }
     }
 
+
     //o programa funciona sem esse métodos, pois as pasta tbm são criadar individualmente
-    public void createDefautFolder(){
+    public void createDefautFolder() {
         String img = "images\\";
         String fileImp = "important\\";
         String fileRem = "reminder\\";
-        List<String> defautFolder = new ArrayList<>(){{
-            add(dirRoot+img);
-            add(dirRoot+fileImp);
-            add(dirRoot+fileRem);
+        List<String> defautFolder = new ArrayList<>() {{
+            add(dirRoot + img);
+            add(dirRoot + fileImp);
+            add(dirRoot + fileRem);
         }};
         createFolders(defautFolder);
     }

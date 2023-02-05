@@ -7,7 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FolderOrchestrator implements FolderManagement {
-    List <String> mListPaths = new ArrayList<>();
+    List<String> mListPaths = new ArrayList<>();
+
     public void createFolders(List<String> mListPaths) {
         mListPaths.forEach(path -> {
             File dirDefaut = new File(path);
@@ -17,7 +18,7 @@ public class FolderOrchestrator implements FolderManagement {
 
     public void removeFolders(List<String> mListPaths) {
         int index = mListPaths.get(0).lastIndexOf('\\');
-        File folder = new File(mListPaths.get(0).substring(0,index));
+        File folder = new File(mListPaths.get(0).substring(0, index));
         mListPaths.forEach(path -> {
             removeAFolder(path);
             File deleteFolder = new File(path);
@@ -57,7 +58,15 @@ public class FolderOrchestrator implements FolderManagement {
     }
 
     @Override
-    public void listAllFoldersCreated() {
-
+    public void listAllFoldersCreated(String path) {
+        File allFolders = new File(path);
+        if (allFolders.isDirectory()) {
+            File[] files = allFolders.listFiles();
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    System.out.println(file.getName());
+                }
+            }
+        }
     }
 }

@@ -15,16 +15,19 @@ public class MenuFile {
         List<MFile> saveAllFiles;
 
         do {
+            System.out.println("----------------------------");
             System.out.println("[1]. Criar Arquivo");
             System.out.println("[2]. Remover Arquivo");
             System.out.println("[3]. Recuperar (mostrar conteúdo) Arquivo");
             System.out.println("[4]. Listar Todos ARQUIVOS REMINDER");
             System.out.println("[5]. Criar vários arquivos (+ de 1)"); // feito chekar
             System.out.println("[6]. Voltar");
-            System.out.println();
-            System.out.println("Chosen Option");
+            System.out.println("----------------------------");
+            System.out.print("Opção:");
             Integer choice = sc.nextInt();
             sc.skip("((?<!\\R)\\s)*");
+            System.out.println("----------------------------");
+
             MFile mFile = null;
             String nameFile = null;
             String contentText = null;
@@ -32,19 +35,17 @@ public class MenuFile {
             Integer value = null;
 
             switch (choice) {
-                case 1:
+                case 1 -> {
                     // criar arquivo
                     mFile = new MFile();
                     System.out.println("Digite o nome do arquivo");
                     nameFile = sc.nextLine().trim() + ".txt";
                     System.out.println("Digite o Texto do arquivo");
                     contentText = sc.nextLine();
-
-                    System.out.println(
-                            "Que tipo é esse arquivos?\n" +
-                                    "[1]. Reminder\n" +
-                                    "[2]. Important\n" +
-                                    "[3]. Simples");
+                    System.out.println("Que tipo é esse arquivos?\n" +
+                            "[1]. Reminder\n" +
+                            "[2]. Important\n" +
+                            "[3]. Simples");
                     value = sc.nextInt();
                     sc.skip("((?<!\\R)\\s)*");
                     type = MFileAnnotationType.values()[value];
@@ -56,19 +57,18 @@ public class MenuFile {
                     } else {
                         System.out.println("Escolha um dos 3 valores");
                     }
-                    break;
-
-                case 2:
+                    System.out.println("----------------------------");
+                }
+                case 2 -> {
                     // remover Arquivos
                     mFile = new MFile();
                     System.out.println("Digite o nome do arquivo que seje Excluir");
                     String fileName = sc.nextLine().trim() + ".txt";
-                    System.out.println(
-                            "Que tipo é esse arquivos?\n" +
-                                    "[1]. Reminder\n" +
-                                    "[2]. Important\n" +
-                                    "[3]. Simples\n" +
-                                    "Escolha: ");
+                    System.out.println("Que tipo é esse arquivos?\n" +
+                            "[1]. Reminder\n" +
+                            "[2]. Important\n" +
+                            "[3]. Simples\n" +
+                            "Escolha: ");
                     value = sc.nextInt();
                     sc.skip("((?<!\\R)\\s)*");
                     type = MFileAnnotationType.values()[value];
@@ -84,26 +84,24 @@ public class MenuFile {
                     } else {
                         System.out.println("Escolha um dos 3 valores");
                     }
-
-                    break;
-
-                case 3:
+                    System.out.println("----------------------------");
+                }
+                case 3 -> {
                     // recuperar arquivos (mostrar arquivo)
                     mFile = new MFile();
                     System.out.println("Nome do Arquivo para ler");
                     mFile.setNameFile(sc.nextLine() + ".txt");
                     handlerFile.searchFile(mFile);
-                    break;
-
-                case 4:
+                    System.out.println("----------------------------");
+                }
+                case 4 -> {
                     // Listar arquivos
                     mFile = new MFile();
-                    System.out.println(
-                            "Listar qual pasta arquivos?\n" +
-                                    "[1]. Reminder\n" +
-                                    "[2]. Important\n" +
-                                    "[3]. Simples\n" +
-                                    "Escolha: ");
+                    System.out.println("Listar qual pasta arquivos?\n" +
+                            "[1]. Reminder\n" +
+                            "[2]. Important\n" +
+                            "[3]. Simples\n" +
+                            "Escolha: ");
                     value = sc.nextInt();
                     type = MFileAnnotationType.values()[value];
                     if (value > 0 && value < MFileAnnotationType.values().length) {
@@ -115,10 +113,9 @@ public class MenuFile {
                     } else {
                         System.out.println("Escolha um dos 3 valores");
                     }
-                    break;
-
-                case 5: // checkar isso
-
+                    System.out.println("----------------------------");
+                }
+                case 5 -> {
                     //criar varios arquivos
                     boolean keepIt = true;
                     saveAllFiles = new ArrayList<>();
@@ -130,11 +127,10 @@ public class MenuFile {
                         System.out.println("Digite o Texto do arquivo");
                         contentText = sc.nextLine();
 
-                        System.out.println(
-                                "Que tipo é esse arquivos?\n" +
-                                        "[1]. Reminder\n" +
-                                        "[2]. Important\n" +
-                                        "[3]. Simples");
+                        System.out.println("Que tipo é esse arquivos?\n" +
+                                "[1]. Reminder\n" +
+                                "[2]. Important\n" +
+                                "[3]. Simples");
                         value = sc.nextInt();
                         sc.skip("((?<!\\R)\\s)*");
                         type = MFileAnnotationType.values()[value];
@@ -153,12 +149,10 @@ public class MenuFile {
                         }
                     } while (keepIt);
                     handlerFile.saveListFiles(saveAllFiles);
-                    break;
-                case 6:
-                    iskeepGoing = Boolean.FALSE;
-                    break;
-                default:
-                    System.out.println("Invalid option");
+                    System.out.println("----------------------------");
+                }
+                case 6 -> iskeepGoing = Boolean.FALSE;
+                default -> System.out.println("Invalid option");
             }
         } while (iskeepGoing);
     }
