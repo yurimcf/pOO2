@@ -14,7 +14,6 @@ public class MainClass {
         HandlerFile handlerFile = new HandlerFile();
         System.out.println("Digite o diretório Raiz:");
         String dirRoot = sc.nextLine() + "\\";
-//        String dirRoot = "E:\\zbancoDeDados";
         handlerFile.setDirRoot(dirRoot);
         handlerFile.createDefautFolder(); // programa funciona sem esse metodo
 
