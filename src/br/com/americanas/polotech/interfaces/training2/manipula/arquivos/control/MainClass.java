@@ -13,8 +13,8 @@ public class MainClass {
         Boolean iskeepGoing = Boolean.TRUE;
         HandlerFile handlerFile = new HandlerFile();
         System.out.println("Digite o diretório Raiz:");
-        //String dirRoot = sc.nextLine() + "\\";
-        String dirRoot = "E:\\zbancoDeDados";
+        String dirRoot = sc.nextLine() + "\\";
+//        String dirRoot = "E:\\zbancoDeDados";
         handlerFile.setDirRoot(dirRoot);
         handlerFile.createDefautFolder(); // programa funciona sem esse metodo
 
