@@ -2,7 +2,7 @@ package br.com.americanas.polotech.interfaces.training2.manipula.arquivos.view.t
 
 import br.com.americanas.polotech.interfaces.training2.manipula.arquivos.model.dao.HandlerFile;
 import br.com.americanas.polotech.interfaces.training2.manipula.arquivos.model.entity.MFile;
-import br.com.americanas.polotech.interfaces.training2.manipula.arquivos.model.enums.MFileAnnotationTypeEnum;
+import br.com.americanas.polotech.interfaces.training2.manipula.arquivos.model.enums.MFileAnnotationType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,7 @@ public class MenuFile {
             MFile mFile = null;
             String nameFile = null;
             String contentText = null;
-            MFileAnnotationTypeEnum type = null;
+            MFileAnnotationType type = null;
             Integer value = null;
 
             switch (choice) {
@@ -47,8 +47,8 @@ public class MenuFile {
                                     "[3]. Simples");
                     value = sc.nextInt();
                     sc.skip("((?<!\\R)\\s)*");
-                    type = MFileAnnotationTypeEnum.values()[value];
-                    if (value > 0 && value < MFileAnnotationTypeEnum.values().length) {
+                    type = MFileAnnotationType.values()[value];
+                    if (value > 0 && value < MFileAnnotationType.values().length) {
                         mFile.setType(type);
                         mFile.setNameFile(nameFile);
                         mFile.setContent(contentText);
@@ -71,8 +71,8 @@ public class MenuFile {
                                     "Escolha: ");
                     value = sc.nextInt();
                     sc.skip("((?<!\\R)\\s)*");
-                    type = MFileAnnotationTypeEnum.values()[value];
-                    if (value > 0 && value < MFileAnnotationTypeEnum.values().length) {
+                    type = MFileAnnotationType.values()[value];
+                    if (value > 0 && value < MFileAnnotationType.values().length) {
                         mFile.setNameFile(fileName);
                         mFile.setType(type);
                         boolean status = handlerFile.removeFileByDirectory(mFile);
@@ -92,11 +92,7 @@ public class MenuFile {
                     mFile = new MFile();
                     System.out.println("Nome do Arquivo para ler");
                     mFile.setNameFile(sc.nextLine() + ".txt");
-                    boolean find = handlerFile.searchFile(mFile);
-                    if (!find) {
-                        System.out.println("Arquivo não encontrado");
-                    }
-                    System.out.println();
+                    handlerFile.searchFile(mFile);
                     break;
 
                 case 4:
@@ -109,8 +105,8 @@ public class MenuFile {
                                     "[3]. Simples\n" +
                                     "Escolha: ");
                     value = sc.nextInt();
-                    type = MFileAnnotationTypeEnum.values()[value];
-                    if (value > 0 && value < MFileAnnotationTypeEnum.values().length) {
+                    type = MFileAnnotationType.values()[value];
+                    if (value > 0 && value < MFileAnnotationType.values().length) {
                         mFile.setType(type);
                         handlerFile.knowTypePath(mFile);
                         System.out.println("Listando Todas os Arquivos");
@@ -141,8 +137,8 @@ public class MenuFile {
                                         "[3]. Simples");
                         value = sc.nextInt();
                         sc.skip("((?<!\\R)\\s)*");
-                        type = MFileAnnotationTypeEnum.values()[value];
-                        if (value > 0 && value < MFileAnnotationTypeEnum.values().length) {
+                        type = MFileAnnotationType.values()[value];
+                        if (value > 0 && value < MFileAnnotationType.values().length) {
                             mFileList.setType(type);
                             mFileList.setNameFile(nameFile);
                             mFileList.setContent(contentText);

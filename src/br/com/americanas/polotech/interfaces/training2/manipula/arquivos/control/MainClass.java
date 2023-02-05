@@ -16,12 +16,14 @@ public class MainClass {
 //        String dirRoot = sc.nextLine() +"\\";
         String dirRoot = "E:\\zbancoDeDados" +"\\";
         handlerFile.setDirRoot(dirRoot);
+        handlerFile.createDefautFolder(); // programa funciona sem esse metodo
 
         do {
             System.out.println("=========================");
             System.out.println("[1]. Ir para Menu Imagem");
             System.out.println("[2]. Ir para Menu Files");
-            System.out.println("[3]. Sair");
+            System.out.println("[3]. Excluir um Folder");
+            System.out.println("[4]. Sair");
             System.out.println("=========================");
             System.out.println("Chosen Option");
             Integer choice = sc.nextInt();
@@ -35,6 +37,11 @@ public class MainClass {
                     MenuFile.MenuFileCrud(handlerFile);
                     break;
                 case 3:
+                    System.out.println("Qual pasta você que deletar?");
+                    String folder = sc.nextLine();
+                    handlerFile.deleteFolderWithFiles(folder);
+                    break;
+                case 4:
                     iskeepGoing = Boolean.FALSE;
                     break;
                 default:

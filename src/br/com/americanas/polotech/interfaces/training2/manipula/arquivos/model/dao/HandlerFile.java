@@ -1,13 +1,16 @@
 package br.com.americanas.polotech.interfaces.training2.manipula.arquivos.model.dao;
 
 import br.com.americanas.polotech.interfaces.training2.manipula.arquivos.model.entity.MFile;
-import br.com.americanas.polotech.interfaces.training2.manipula.arquivos.model.enums.MFileAnnotationTypeEnum;
+import br.com.americanas.polotech.interfaces.training2.manipula.arquivos.model.enums.MFileAnnotationType;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 public class HandlerFile extends FileOrchestrator {
-    private String dirRoot = null;
+    private String dirRoot;
 
     public void setDirRoot(String dirRoot) {
         this.dirRoot = dirRoot;
@@ -92,7 +95,7 @@ public class HandlerFile extends FileOrchestrator {
 
     //metodos para imagem
     public void saveImgWithDirectory(MFile mFile) {
-        if (mFile.getType() == MFileAnnotationTypeEnum.IMAGE) {
+        if (mFile.getType() == MFileAnnotationType.IMAGE) {
             createAFolder(dirRoot + "\\images");
         }
         saveImageFile(mFile.getPath(),
@@ -110,5 +113,41 @@ public class HandlerFile extends FileOrchestrator {
 
     private void createSpecificFolder(MFile mFile) {
         createAFolder(mFile.getPath());
+    }
+
+    //metodos para folder
+    public void deleteFolderWithFiles(String path) {
+        Scanner sc = new Scanner(System.in);
+        File dir = new File(dirRoot + path);
+        List<String> listString = new ArrayList<>();
+
+        if (dir.exists()) {
+            File[] files = dir.listFiles();
+            List<File> mFilesList = new ArrayList<>(Arrays.stream(files).toList());
+            mFilesList.forEach(file -> {
+                listString.add(file.getPath());
+                System.out.println(file.getName());
+            });
+
+            System.out.println("Voce está tendando excluir uma Pasta com arquivos," +
+                    " Continuar?" + "[S/N]");
+            String keep = sc.nextLine();
+            if (keep.equalsIgnoreCase("S")) {
+                removeFolders(listString);
+            }
+        }
+    }
+
+    //o programa funciona sem esse métodos, pois as pasta tbm são criadar individualmente
+    public void createDefautFolder(){
+        String img = "images\\";
+        String fileImp = "important\\";
+        String fileRem = "reminder\\";
+        List<String> defautFolder = new ArrayList<>(){{
+            add(dirRoot+img);
+            add(dirRoot+fileImp);
+            add(dirRoot+fileRem);
+        }};
+        createFolders(defautFolder);
     }
 }

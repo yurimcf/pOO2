@@ -1,13 +1,13 @@
 package br.com.americanas.polotech.interfaces.training2.manipula.arquivos.model.entity;
 
 
-import br.com.americanas.polotech.interfaces.training2.manipula.arquivos.model.enums.MFileAnnotationTypeEnum;
+import br.com.americanas.polotech.interfaces.training2.manipula.arquivos.model.enums.MFileAnnotationType;
 
 public class MFile {
     private String nameFile;
     private String path;
     private String content;
-    private MFileAnnotationTypeEnum type;
+    private MFileAnnotationType type;
 
     public String getNameFile() {
         return nameFile;
@@ -33,11 +33,11 @@ public class MFile {
         this.content = content;
     }
 
-    public MFileAnnotationTypeEnum getType() {
+    public MFileAnnotationType getType() {
         return type;
     }
 
-    public void setType(MFileAnnotationTypeEnum type) {
+    public void setType(MFileAnnotationType type) {
         this.type = type;
     }
 }

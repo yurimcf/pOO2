@@ -1,7 +1,7 @@
 package br.com.americanas.polotech.interfaces.training2.manipula.arquivos.model.dao;
 
 import br.com.americanas.polotech.interfaces.training2.manipula.arquivos.model.entity.MFile;
-import br.com.americanas.polotech.interfaces.training2.manipula.arquivos.model.enums.MFileAnnotationTypeEnum;
+import br.com.americanas.polotech.interfaces.training2.manipula.arquivos.model.enums.MFileAnnotationType;
 import br.com.americanas.polotech.interfaces.training2.manipula.arquivos.model.dao.interfaces.FileDatabase;
 import br.com.americanas.polotech.interfaces.training2.manipula.arquivos.model.dao.interfaces.ImageFileDatabase;
 
@@ -75,7 +75,7 @@ public class FileOrchestrator extends FolderOrchestrator implements ImageFileDat
 
     //metodos do FileDatabase
     @Override
-    public void saveFile(String directory, String content, MFileAnnotationTypeEnum type, String nameFile) {
+    public void saveFile(String directory, String content, MFileAnnotationType type, String nameFile) {
         File file = new File(directory + nameFile);
         boolean status = file.exists();
         if (!status) {
@@ -103,15 +103,13 @@ public class FileOrchestrator extends FolderOrchestrator implements ImageFileDat
             }
         } catch (FileNotFoundException e) {
             System.out.println("Arquivo não encontrado");
-            ;
         }
     }
 
     @Override
-    public boolean removeFile(String directory, String nameFile, MFileAnnotationTypeEnum type) {
+    public boolean removeFile(String directory, String nameFile, MFileAnnotationType type) {
         File dir = new File(directory + "\\" + nameFile);
         boolean isFile = dir.isFile();
-        boolean isFolder = dir.isDirectory();
         if (isFile) {
             dir.delete();
             return true;

@@ -9,11 +9,21 @@ import java.util.List;
 public class FolderOrchestrator implements FolderManagement {
     List <String> mListPaths = new ArrayList<>();
     public void createFolders(List<String> mListPaths) {
-
+        mListPaths.forEach(path -> {
+            File dirDefaut = new File(path);
+            dirDefaut.mkdir();
+        });
     }
 
     public void removeFolders(List<String> mListPaths) {
-
+        int index = mListPaths.get(0).lastIndexOf('\\');
+        File folder = new File(mListPaths.get(0).substring(0,index));
+        mListPaths.forEach(path -> {
+            removeAFolder(path);
+            File deleteFolder = new File(path);
+            deleteFolder.delete();
+        });
+        folder.delete();
     }
 
     //metodos do implements

@@ -2,7 +2,7 @@ package br.com.americanas.polotech.interfaces.training2.manipula.arquivos.view.t
 
 import br.com.americanas.polotech.interfaces.training2.manipula.arquivos.model.dao.HandlerFile;
 import br.com.americanas.polotech.interfaces.training2.manipula.arquivos.model.entity.MFile;
-import br.com.americanas.polotech.interfaces.training2.manipula.arquivos.model.enums.MFileAnnotationTypeEnum;
+import br.com.americanas.polotech.interfaces.training2.manipula.arquivos.model.enums.MFileAnnotationType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +38,7 @@ public class MenuImage {
                     mFile.setContent(urlImg);
                     mFile.setNameFile(nameImg);
                     mFile.setPath(diretory);
-                    mFile.setType(MFileAnnotationTypeEnum.IMAGE);
+                    mFile.setType(MFileAnnotationType.IMAGE);
                     handlerFile.saveImgWithDirectory(mFile);
                     break;
 
@@ -78,7 +78,7 @@ public class MenuImage {
                         mFileList.setContent(urlImgs);
                         mFileList.setNameFile(name);
                         mFileList.setPath(diretory);
-                        mFileList.setType(MFileAnnotationTypeEnum.IMAGE);
+                        mFileList.setType(MFileAnnotationType.IMAGE);
                         saveAllImgsList.add(mFileList);
                         System.out.println("Adicionar outra Musica? [S/N]");
                         String keep = sc.nextLine();
